@@ -15,15 +15,15 @@ const Footer = () => {
             </p>
           </div>
           <div className="flex gap-6 group md:leading-8">
-            <a href="/about" className="link">
+            <Link href="/about" className="link">
               /About
-            </a>
-            <a href="/terms" className="link">
+            </Link>
+            <Link href="/terms" className="link">
               /Terms
-            </a>
-            <a href="/privacy" className="link">
+            </Link>
+            <Link href="/privacy" className="link">
               /Privacy
-            </a>
+            </Link>
           </div>
         </div>
         <div className="grid grid-cols-2 gap-4 sm:gap-10 pb-10">
