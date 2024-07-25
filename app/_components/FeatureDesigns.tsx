@@ -23,8 +23,7 @@ const FeatureDesigns = () => {
                   alt="UI Design"
                   width={400}
                   height={300}
-                  objectFit="contain"
-                  className="w-full"
+                  className="w-full object-contain"
                 />
               </div>
               <p className="my-3 text-[#ADADAD] text-[17px]">
