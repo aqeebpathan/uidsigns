@@ -59,7 +59,7 @@ const Navbar = () => {
             ))}
           </ul>
         </nav>
-        <div className="hidden sm:inline-flex w-[142px] ">
+        <div className="hidden sm:inline-flex w-[160.5px] ">
           <button className="w-full bg-white text-black py-3 rounded text-sm">
             Subscribe
           </button>
