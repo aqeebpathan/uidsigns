@@ -43,7 +43,7 @@ const Navbar = () => {
             alt="logo"
             width={500}
             height={500}
-            className="w-10 h-9"
+            className="w-9 h-8"
           />
           UiDsigns.
         </Link>
@@ -59,7 +59,7 @@ const Navbar = () => {
             ))}
           </ul>
         </nav>
-        <div className="w-[142px] inline-flex">
+        <div className="hidden sm:inline-flex w-[142px] ">
           <button className="w-full bg-white text-black py-3 rounded text-sm">
             Subscribe
           </button>
