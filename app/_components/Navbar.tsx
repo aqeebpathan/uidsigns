@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { navLinks } from "../_constants";
+import Image from "next/image";
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -35,8 +36,15 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2.5">
         <Link
           href="/"
-          className="text-white text-4xl tracking-tighter font-medium"
+          className="text-white text-3xl tracking-tighter font-medium flex items-center gap-1.5"
         >
+          <Image
+            src="/logo2.png"
+            alt="logo"
+            width={500}
+            height={500}
+            className="w-10 h-9"
+          />
           UiDsigns.
         </Link>
         <nav>
