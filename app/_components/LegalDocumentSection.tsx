@@ -33,12 +33,12 @@ const LegalDocumentSection: React.FC<LegalDocumentSectionProps> = ({
       </div>
       <div className="max-w-3xl mx-auto text-lg text-[#ADADAD] px-4 mb-[-1px]">
         {sections.map(({ heading, content }, index) => (
-          <div key={heading} className="py-12 border-b border-neutral-800">
+          <div key={index} className="py-12 border-b border-neutral-800">
             <h2 className="text-2xl text-[#EBEBEB] font-bold">{heading}</h2>
 
             {Array.isArray(content) ? (
-              content.map(({ subheading, text }) => (
-                <div key={subheading}>
+              content.map(({ subheading, text }, index) => (
+                <div key={index * index}>
                   <p className="mt-6">
                     {subheading && (
                       <strong className="text-[#EBEBEB]">
