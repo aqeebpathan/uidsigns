@@ -34,19 +34,21 @@ const Navbar = () => {
       }`}
     >
       <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-2.5">
-        <Link
-          href="/"
-          className="text-white text-3xl tracking-tighter font-medium flex items-center gap-1.5"
-        >
-          <Image
-            src="/logo2.png"
-            alt="logo"
-            width={500}
-            height={500}
-            className="w-9 h-8"
-          />
-          UiDsigns.
-        </Link>
+        <div className="min-w-[160.5px]">
+          <Link
+            href="/"
+            className="text-white text-3xl tracking-tighter font-medium flex items-center gap-0.5 w-fit min-h-9"
+          >
+            <Image
+              src="/logo2.png"
+              alt="logo"
+              width={500}
+              height={500}
+              className="w-9 h-8"
+            />
+            {!scrolled && " UiDsigns."}
+          </Link>
+        </div>
         <nav>
           <ul className="hidden sm:flex gap-8">
             {navLinks.map(({ label, url }) => (

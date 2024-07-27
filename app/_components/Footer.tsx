@@ -8,8 +8,8 @@ const Footer = () => {
         <div className="py-10 flex flex-col md:flex-row md:items-end justify-between gap-8 sm:gap-10 ">
           <div>
             {" "}
-            <h1 className="text-xl sm:text-2xl md:text-3xl font-semibold">
-              <Link href="/" className="flex items-center gap-1.5 w-fit">
+            <h1 className="text-3xl font-semibold">
+              <Link href="/" className="flex items-center gap-0.5 w-fit">
                 <Image
                   src="/logo2.png"
                   alt="logo"
@@ -20,7 +20,7 @@ const Footer = () => {
                 UiDsigns.
               </Link>
             </h1>
-            <p className="text-[#A9A9A9] mt-1 sm:mt-0 md:leading-8">
+            <p className="text-[#A9A9A9] mt-1 md:leading-8">
               Explore top UI/UX designs that set trends, by leading designers
             </p>
           </div>
