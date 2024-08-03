@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={bricolageGrotesque.className}>
+      <body className={`${bricolageGrotesque.className} antialiased`}>
         <Navbar />
         {children}
         <Footer />
