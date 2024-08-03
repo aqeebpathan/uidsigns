@@ -20,7 +20,7 @@ const Footer = () => {
                 UiDsigns.
               </Link>
             </h1>
-            <p className="text-[#A9A9A9] mt-1 md:leading-8">
+            <p className="text-[#A9A9A9] mt-6 sm:mt-4">
               Explore top UI/UX designs that set trends, by leading designers
             </p>
           </div>
