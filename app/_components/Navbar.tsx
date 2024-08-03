@@ -44,7 +44,7 @@ const Navbar = () => {
               alt="logo"
               width={500}
               height={500}
-              className="w-9 h-8"
+              className={`w-9 h-8 ${scrolled && "hover:scale-110 transition"}`}
             />
             {!scrolled && " UiDsigns."}
           </Link>
