@@ -8,7 +8,7 @@ interface Design {
 
 export async function fetchDesigns(): Promise<Design[]> {
   try {
-    const res = await fetch("http://localhost:3000/api/designs");
+    const res = await fetch(`${process.env.BASE_URL}/api/designs`);
 
     const data = await res.json();
 
