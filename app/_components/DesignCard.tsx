@@ -41,6 +41,7 @@ const DesignCard: React.FC<DesignCardProps> = ({
 
       <Link
         href={sourceUrl}
+        target="_blank"
         className="bg-neutral-100 text-black/90 absolute top-3 right-3 p-1.5 rounded-full opacity-0 group-hover:opacity-100 hover:bg-neutral-900 hover:text-neutral-100 transition"
       >
         <HiOutlineExternalLink />
