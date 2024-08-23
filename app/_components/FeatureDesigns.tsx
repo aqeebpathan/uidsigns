@@ -6,6 +6,8 @@ interface Design {
   designerUrl: string;
 }
 
+export const revalidate = 0;
+
 export async function fetchDesigns(): Promise<Design[]> {
   try {
     const res = await fetch(`${process.env.BASE_URL}/api/designs`);
@@ -25,7 +27,6 @@ import { title } from "process";
 
 const FeatureDesigns = async () => {
   const designs = await fetchDesigns();
-  console.log(designs);
 
   return (
     <section className=" bg-black">
