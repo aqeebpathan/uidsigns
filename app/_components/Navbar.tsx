@@ -40,7 +40,7 @@ const Navbar = () => {
             className="text-white text-3xl tracking-tighter font-medium flex items-center gap-0.5 w-fit min-h-9"
           >
             <Image
-              src="/logo2.png"
+              src="/logo.png"
               alt="logo"
               width={500}
               height={500}

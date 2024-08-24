@@ -11,7 +11,7 @@ const Footer = () => {
             <h1 className="text-3xl font-semibold">
               <Link href="/" className="flex items-center gap-0.5 w-fit">
                 <Image
-                  src="/logo2.png"
+                  src="/logo.png"
                   alt="logo"
                   width={500}
                   height={500}
