@@ -20,7 +20,6 @@ export async function fetchFeaturedDesigns(): Promise<Design[]> {
 
 import Link from "next/link";
 import DesignCard from "./DesignCard";
-import { title } from "process";
 
 const FeatureDesigns = async () => {
   const featuredDesigns = await fetchFeaturedDesigns();
@@ -30,7 +29,7 @@ const FeatureDesigns = async () => {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
           {featuredDesigns.map(
-            ({ imageUrl, designerName, sourceUrl, designerUrl }, i) => (
+            ({ title, imageUrl, designerName, sourceUrl, designerUrl }, i) => (
               <DesignCard
                 title={title}
                 imageUrl={imageUrl}
