@@ -26,22 +26,26 @@ interface DesignListProps {
 const DesignList = ({ initialDesigns }: DesignListProps) => {
   const [designs, setDesigns] = useState(initialDesigns);
   const [hasMore, setHasMore] = useState<boolean>(true);
-  const [lastId, setLastId] = useState<string | null>(
-    initialDesigns[initialDesigns.length - 1]?._id || null
-  );
 
   console.log(designs);
 
   const fetchMoreDesigns = async () => {
     try {
-      const response = await fetch(`/api/designs?limit=12&lastId=${lastId}`);
+      const response = await fetch(`/api/designs?limit=20`);
       const { designs: newDesigns } = await response.json();
 
-      if (newDesigns.length === 0) {
+      // Deduplicate designs on the client side
+      const uniqueNewDesigns = newDesigns.filter(
+        (newDesign: Design) =>
+          !designs.some(
+            (existingDesign) => existingDesign._id === newDesign._id
+          )
+      );
+
+      if (uniqueNewDesigns.length === 0) {
         setHasMore(false);
       } else {
-        setDesigns((prevDesigns) => [...prevDesigns, ...newDesigns]);
-        setLastId(newDesigns[newDesigns.length - 1]._id);
+        setDesigns((prevDesigns) => [...prevDesigns, ...uniqueNewDesigns]);
       }
     } catch (error) {
       console.error("Error fetching more designs:", error);
