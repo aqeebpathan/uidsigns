@@ -9,6 +9,7 @@ import {
   PiDotsThreeOutlineFill,
   PiDotsThreeOutlineLight,
 } from "react-icons/pi";
+import { usePathname } from "next/navigation";
 
 type NavLink = {
   label: string;
@@ -18,11 +19,14 @@ type NavLink = {
 type MobileNavbarProps = {
   isOpen: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  pathname: string;
 };
 
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState<boolean>(false);
   const [isMobileNavbarOpen, setIsMobileNavbarOpen] = useState<boolean>(false);
+
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -77,7 +81,9 @@ const Navbar: React.FC = () => {
             {navLinks.map(({ label, url }: NavLink) => (
               <li
                 key={label}
-                className="text-[#ADADAD] hover:text-white transition duration-200"
+                className={`text-[#ADADAD] hover:text-white transition duration-200 ${
+                  pathname === url ? "text-white" : ""
+                }`}
               >
                 <Link href={url}>{label}</Link>
               </li>
@@ -106,13 +112,18 @@ const Navbar: React.FC = () => {
         <MobileNavbar
           isOpen={isMobileNavbarOpen}
           setOpen={setIsMobileNavbarOpen}
+          pathname={pathname}
         />
       )}
     </header>
   );
 };
 
-const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, setOpen }) => {
+const MobileNavbar: React.FC<MobileNavbarProps> = ({
+  isOpen,
+  setOpen,
+  pathname,
+}) => {
   return (
     <div
       className={`flex flex-row justify-between items-center gap-4 px-4 py-3 text-md border-b border-neutral-800 md:hidden  ${
@@ -124,7 +135,9 @@ const MobileNavbar: React.FC<MobileNavbarProps> = ({ isOpen, setOpen }) => {
           <li
             onClick={() => setOpen((curState) => !curState)}
             key={label}
-            className="text-[#ADADAD] hover:text-white transition duration-200"
+            className={`text-[#ADADAD] hover:text-white transition duration-200 ${
+              pathname === url ? "text-white" : ""
+            }`}
           >
             <Link href={url}>/{label}</Link>
           </li>
