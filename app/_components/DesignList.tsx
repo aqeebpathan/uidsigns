@@ -5,6 +5,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import { Design } from "../../types/design";
 import DesignCard from "./DesignCard";
+import Loader from "./Loader";
 
 interface DesignListProps {
   initialDesigns: Design[];
@@ -44,6 +45,7 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
       fetchDesigns(searchQuery).then((results) => {
         setDesigns(results);
         setHasMore(results.length > 0);
+        setHasMore(results.length > 20);
       });
     }
   }, [searchQuery, initialDesigns, fetchDesigns]);
@@ -74,15 +76,19 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
     }
   };
 
+  if (designs.length === 0) {
+    return <p className="text-center">No result found for {searchQuery}</p>;
+  }
+
   return (
     <InfiniteScroll
       dataLength={designs.length}
       next={fetchMoreDesigns}
       hasMore={hasMore}
-      loader={<h4 className="text-center">Loading...</h4>}
+      loader={<Loader />}
       endMessage={<p className="text-center">No more designs.</p>}
     >
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-12">
         {designs.map((design) => (
           <DesignCard key={design._id} design={design} />
         ))}
