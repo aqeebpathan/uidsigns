@@ -1,38 +1,59 @@
 "use client";
 
-import { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import DesignCard from "./DesignCard";
 
-interface Design {
-  _id: string;
-  uiID: string;
-  title: string;
-  imageUrl: string;
-  designerName: string;
-  designerUrl: string;
-  featured: boolean;
-  category: string;
-  views: number;
-  createdAt: string;
-  updatedAt: string;
-  sourceUrl: string;
-}
+import { Design } from "../../types/design";
+import DesignCard from "./DesignCard";
 
 interface DesignListProps {
   initialDesigns: Design[];
+  searchQuery: string;
 }
 
-const DesignList = ({ initialDesigns }: DesignListProps) => {
+const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
   const [designs, setDesigns] = useState(initialDesigns);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  console.log(designs);
-
-  const fetchMoreDesigns = async () => {
+  // Function to fetch designs based on query
+  const fetchDesigns = useCallback(async (query: string) => {
+    setLoading(true);
     try {
-      const response = await fetch(`/api/designs?limit=20`);
-      const { designs: newDesigns } = await response.json();
+      const response = await fetch(
+        `/api/designs?limit=20${
+          query ? `&search=${encodeURIComponent(query)}` : ""
+        }`
+      );
+      const { designs: fetchedDesigns } = await response.json();
+      return fetchedDesigns;
+    } catch (error) {
+      console.error("Error fetching designs:", error);
+      return [];
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  // Fetch initial designs or search results
+  useEffect(() => {
+    if (searchQuery === "") {
+      setDesigns(initialDesigns);
+      setHasMore(true);
+    } else {
+      fetchDesigns(searchQuery).then((results) => {
+        setDesigns(results);
+        setHasMore(results.length > 0);
+      });
+    }
+  }, [searchQuery, initialDesigns, fetchDesigns]);
+
+  // Fetch more designs for infinite scroll
+  const fetchMoreDesigns = async () => {
+    if (loading) return; // Prevent multiple requests
+
+    try {
+      const newDesigns = await fetchDesigns(searchQuery);
 
       // Deduplicate designs on the client side
       const uniqueNewDesigns = newDesigns.filter(
@@ -58,20 +79,14 @@ const DesignList = ({ initialDesigns }: DesignListProps) => {
       dataLength={designs.length}
       next={fetchMoreDesigns}
       hasMore={hasMore}
-      loader={<h4>Loading...</h4>}
-      endMessage={<p>No more designs to show.</p>}
-      className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12"
+      loader={<h4 className="text-center">Loading...</h4>}
+      endMessage={<p className="text-center">No more designs.</p>}
     >
-      {designs.map((design) => (
-        <DesignCard
-          key={design._id}
-          title={design.title}
-          imageUrl={design.imageUrl}
-          designerName={design.designerName}
-          designerUrl={design.designerUrl}
-          sourceUrl={design.sourceUrl}
-        />
-      ))}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+        {designs.map((design) => (
+          <DesignCard key={design._id} design={design} />
+        ))}
+      </div>
     </InfiniteScroll>
   );
 };
