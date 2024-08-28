@@ -1,22 +1,15 @@
-interface DesignCardProps {
-  title: string;
-  imageUrl: string;
-  designerName: string;
-  sourceUrl: string;
-  designerUrl: string;
-}
-
 import Image from "next/image";
 import Link from "next/link";
 import { HiOutlineExternalLink } from "react-icons/hi";
 
-const DesignCard: React.FC<DesignCardProps> = ({
-  title,
-  imageUrl,
-  designerName,
-  sourceUrl,
-  designerUrl,
-}) => {
+import { Design } from "../../types/design";
+interface DesignCardProps {
+  design: Design;
+}
+
+const DesignCard: React.FC<DesignCardProps> = ({ design }) => {
+  const { title, imageUrl, designerName, sourceUrl, designerUrl } = design;
+
   return (
     <div className="group relative">
       <Link href={sourceUrl} target="_blank">
