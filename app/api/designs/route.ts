@@ -60,19 +60,34 @@ export async function POST(req: NextRequest) {
 //   }
 // }
 
-// app/api/designs/route.ts
-
 export async function GET(req: NextRequest) {
   try {
     await connectToMongoDB();
 
     const url = new URL(req.url);
     const limit = parseInt(url.searchParams.get("limit") || "8", 10);
+    const query = url.searchParams.get("search");
 
-    // Random sampling
-    const designs = await Design.aggregate([
-      { $sample: { size: limit + 0 } }, // Fetch extra to account for potential duplicates
-    ]).exec();
+    let designs;
+
+    if (query) {
+      // Build the $match stage to search in multiple fields
+      const matchStage = {
+        $or: [
+          { title: { $regex: query, $options: "i" } }, // Search in title
+          { category: { $regex: query, $options: "i" } }, // Search in category
+          { uiID: { $regex: query, $options: "i" } }, // Search in uiID
+        ],
+      };
+
+      designs = await Design.aggregate([
+        { $match: matchStage },
+        { $sample: { size: limit } }, // Randomize the results
+      ]).exec();
+    } else {
+      // If no query, return random designs
+      designs = await Design.aggregate([{ $sample: { size: limit } }]).exec();
+    }
 
     return NextResponse.json({ designs }, { status: 200 });
   } catch (error) {
