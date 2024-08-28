@@ -1,16 +1,55 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+
 const SearchDesignInput = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const router = useRouter();
+  const [query, setQuery] = useState<string>("");
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.ctrlKey || event.metaKey) && event.key === "f") {
+        event.preventDefault();
+
+        if (inputRef.current) {
+          inputRef.current.focus();
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(event.target.value);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    router.push(`/collections?search=${encodeURIComponent(query)}`);
+  };
+
   return (
-    <div className="flex justify-center">
-      <div className="relative">
+    <div className="flex justify-center mb-4">
+      <form onSubmit={handleSubmit} className="relative">
         <input
           type="text"
           placeholder="Find design by ID or keyword."
-          className="w-[360px] px-5 py-3 bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100  focus:outline-white text-md sm:text-[16px]"
+          className="w-[360px] px-5 py-3 bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100 focus:outline-white text-md sm:text-[16px]"
+          ref={inputRef}
+          value={query}
+          onChange={handleChange}
         />
         <kbd className="absolute top-1.5 right-1.5 bg-neutral-800 py-2 px-2.5 rounded text-sm font-medium">
           <span>⌘</span> F
         </kbd>
-      </div>
+      </form>
     </div>
   );
 };
