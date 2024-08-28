@@ -62,32 +62,32 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   try {
-    await connectToMongoDB();
+    await connectToMongoDB(); // Ensure DB connection
 
     const url = new URL(req.url);
-    const limit = parseInt(url.searchParams.get("limit") || "8", 10);
+    const limit = parseInt(url.searchParams.get("limit") || "20", 10);
     const query = url.searchParams.get("search");
 
-    let designs;
-
+    // Build query based on presence of search term
+    let matchStage = {};
     if (query) {
-      // Build the $match stage to search in multiple fields
-      const matchStage = {
+      matchStage = {
         $or: [
-          { title: { $regex: query, $options: "i" } }, // Search in title
-          { category: { $regex: query, $options: "i" } }, // Search in category
-          { uiID: { $regex: query, $options: "i" } }, // Search in uiID
+          { title: { $regex: query, $options: "i" } },
+          { category: { $regex: query, $options: "i" } },
+          { uiID: { $regex: query, $options: "i" } },
         ],
       };
-
-      designs = await Design.aggregate([
-        { $match: matchStage },
-        { $sample: { size: limit } }, // Randomize the results
-      ]).exec();
-    } else {
-      // If no query, return random designs
-      designs = await Design.aggregate([{ $sample: { size: limit } }]).exec();
     }
+
+    // Define pipeline with randomization and optional matching
+    const pipeline = [
+      { $match: matchStage }, // Apply search filtering if query exists
+      { $sample: { size: limit } }, // Randomize results and limit
+    ];
+
+    // Fetch designs based on pipeline
+    const designs = await Design.aggregate(pipeline).exec();
 
     return NextResponse.json({ designs }, { status: 200 });
   } catch (error) {
