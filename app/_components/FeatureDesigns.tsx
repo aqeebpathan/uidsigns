@@ -1,10 +1,6 @@
-interface Design {
-  title: string;
-  imageUrl: string;
-  designerName: string;
-  sourceUrl: string;
-  designerUrl: string;
-}
+import Link from "next/link";
+import DesignCard from "./DesignCard";
+import { Design } from "../../types/design";
 
 export async function fetchFeaturedDesigns(): Promise<Design[]> {
   try {
@@ -18,9 +14,6 @@ export async function fetchFeaturedDesigns(): Promise<Design[]> {
   }
 }
 
-import Link from "next/link";
-import DesignCard from "./DesignCard";
-
 const FeatureDesigns = async () => {
   const featuredDesigns = await fetchFeaturedDesigns();
 
@@ -28,18 +21,9 @@ const FeatureDesigns = async () => {
     <section className=" bg-black">
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 ">
-          {featuredDesigns.map(
-            ({ title, imageUrl, designerName, sourceUrl, designerUrl }, i) => (
-              <DesignCard
-                title={title}
-                imageUrl={imageUrl}
-                designerName={designerName}
-                sourceUrl={sourceUrl}
-                designerUrl={designerUrl}
-                key={i}
-              />
-            )
-          )}
+          {featuredDesigns.map((design, i) => (
+            <DesignCard key={design._id} design={design} />
+          ))}
         </div>
 
         <div className="flex justify-center items-center py-10">
