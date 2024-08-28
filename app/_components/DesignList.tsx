@@ -77,7 +77,9 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
   };
 
   if (designs.length === 0) {
-    return <p className="text-center">No result found for {searchQuery}</p>;
+    return (
+      <p className="text-center mt-7">No result found for {searchQuery}</p>
+    );
   }
 
   return (
@@ -88,6 +90,12 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
       loader={<Loader />}
       endMessage={<p className="text-center">No more designs.</p>}
     >
+      {searchQuery && (
+        <h1 className="text-[#ADADAD] text-center mt-3">
+          Showing results for{" "}
+          <span className="text-white text-lg font-medium"> {searchQuery}</span>
+        </h1>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 my-12">
         {designs.map((design) => (
           <DesignCard key={design._id} design={design} />
