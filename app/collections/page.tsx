@@ -16,7 +16,7 @@ const page = async ({
   const query = searchParams.search || "";
 
   return (
-    <section className="pt-40 pb-24">
+    <section className="pt-40 pb-24 min-h-screen">
       <div className="max-w-7xl mx-auto relative px-4">
         <SearchDesignInput />
         <DesignList initialDesigns={initialDesigns} searchQuery={query} />
