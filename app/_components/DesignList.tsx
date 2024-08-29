@@ -13,7 +13,7 @@ interface DesignListProps {
 }
 
 const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
-  const [designs, setDesigns] = useState(initialDesigns);
+  const [designs, setDesigns] = useState<Design[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -39,6 +39,7 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
   // Fetch initial designs or search results
   useEffect(() => {
     if (searchQuery === "") {
+      // If there's no search query, set designs to initial designs
       setDesigns(initialDesigns);
       setHasMore(true);
     } else {
@@ -76,9 +77,12 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
     }
   };
 
-  if (designs.length === 0) {
+  if (designs.length === 0 && !loading) {
     return (
-      <p className="text-center mt-7">No result found for {searchQuery}</p>
+      <p className="text-[#ADADAD] text-center mt-7">
+        No result found for{" "}
+        <span className="text-white text-lg font-medium"> {searchQuery}</span>
+      </p>
     );
   }
 
