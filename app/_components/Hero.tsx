@@ -1,11 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { FormEvent, useState } from "react";
 
 const Hero = () => {
+  const [search, setSearch] = useState("");
   const pathname = usePathname();
+  const router = useRouter();
   const showHero = pathname === "/"; // Adjust the condition as needed
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    router.push(`/collections?search=${search}`);
+  };
 
   return (
     <>
@@ -39,10 +47,13 @@ const Hero = () => {
             </div>
 
             <div className="flex justify-center mt-12">
-              <form className="w-80">
+              <form onSubmit={handleSubmit} className="w-80">
                 <input
                   type="text"
                   placeholder="Find design by ID or keyword."
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                  }}
                   className="w-full px-4 py-2 bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100 hover:scale-110 focus:scale-110 focus:outline-white text-sm sm:text-[16px]"
                 />
               </form>
@@ -55,11 +66,3 @@ const Hero = () => {
 };
 
 export default Hero;
-
-<div className="h-screen w-full dark:bg-black bg-white  dark:bg-grid-white/[0.2] bg-grid-black/[0.2] relative flex items-center justify-center">
-  {/* Radial gradient for the container to give a faded look */}
-  <div className="absolute pointer-events-none inset-0 flex items-center justify-center dark:bg-black bg-white [mask-image:radial-gradient(ellipse_at_center,transparent_20%,black)]"></div>
-  <p className="text-4xl sm:text-7xl font-bold relative z-20 bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-500 py-8">
-    Backgrounds
-  </p>
-</div>;
