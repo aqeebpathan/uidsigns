@@ -56,7 +56,7 @@ const Hero = () => {
                   "w-full px-4 py-2 pr-12 bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100 hover:scale-110 focus:scale-110 focus:outline-white text-sm sm:text-[16px]"
                 }
                 kbdClassName={
-                  "bg-[#2c2c2c] absolute right-1.5 top-1.5 px-2 rounded font-bold group-hover:translate-x-4 group-hover:scale-110 transition-transform duration-300 transform group-focus-within:translate-x-4 group-focus-within:scale-110"
+                  "bg-[#2c2c2c] absolute right-1.5 top-1.5 px-2 rounded font-bold group-hover:translate-x-4 group-hover:scale-110 transition-transform duration-300 transform group-focus-within:translate-x-4 group-focus-within:scale-110 pointer-events-none"
                 }
               />
             </div>
