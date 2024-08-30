@@ -10,11 +10,13 @@ const SearchDesignInput = () => {
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.key === "f") {
+      if ((event.ctrlKey || event.metaKey) && event.key == "f") {
         event.preventDefault();
 
-        if (inputRef.current) {
-          inputRef.current.focus();
+        if (document.activeElement === inputRef.current) {
+          inputRef.current?.blur(); // If input is focused, blur it
+        } else {
+          inputRef.current?.focus(); // If input is not focused, focus it
         }
       }
     };
@@ -45,12 +47,12 @@ const SearchDesignInput = () => {
         <input
           type="text"
           placeholder="Find design by ID or keyword."
-          className="w-full sm:w-[360px] px-5 py-3 bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100 focus:outline-white text-md sm:text-[16px]"
+          className="w-full sm:w-[360px] px-5 py-3 pr-[76px] bg-white rounded outline-none text-black placeholder-[#A9A9A9] transition-transform duration-300 transform scale-100 focus:outline-white text-md sm:text-[16px]"
           ref={inputRef}
           value={query}
           onChange={handleChange}
         />
-        <kbd className="hidden lg:block absolute top-1.5 right-1.5 bg-neutral-800 py-2 px-2.5 rounded text-sm font-medium">
+        <kbd className="hidden lg:block absolute top-1.5 right-1.5 bg-[#2c2c2c] py-2 px-2.5 rounded text-sm font-medium">
           <span>⌘</span> F
         </kbd>
       </form>
