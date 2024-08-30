@@ -86,13 +86,17 @@ const DesignList = ({ initialDesigns, searchQuery }: DesignListProps) => {
     );
   }
 
+  const endMessage = !loading ? (
+    <p className="text-center">No more designs.</p>
+  ) : null;
+
   return (
     <InfiniteScroll
       dataLength={designs.length}
       next={fetchMoreDesigns}
       hasMore={hasMore}
       loader={<Loader />}
-      endMessage={<p className="text-center">No more designs.</p>}
+      endMessage={endMessage}
     >
       {searchQuery && (
         <h1 className="text-[#ADADAD] text-center mt-3">
