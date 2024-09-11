@@ -1,6 +1,12 @@
 import mongoose from "mongoose";
 
 const connectToMongoDB = async () => {
+  // Check if there is an existing connection
+  if (mongoose.connections[0].readyState) {
+    console.log("Already connected to MONGODB");
+    return;
+  }
+
   const mongoURI = process.env.MONGODB_URI;
 
   if (!mongoURI) {
@@ -9,7 +15,10 @@ const connectToMongoDB = async () => {
   }
 
   try {
-    await mongoose.connect(mongoURI);
+    await mongoose.connect(mongoURI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
     console.log("Connected to MONGODB🥭");
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
